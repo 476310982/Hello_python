@@ -8,7 +8,12 @@
 import scrapy
 
 
-class TutorialItem(scrapy.Item):
+class NovelItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    book_id = scrapy.Field()
+    title = scrapy.Field()
+    author = scrapy.Field()
+    words = scrapy.Field()
+    last_time = scrapy.Field()
+    novel_content = scrapy.Field()

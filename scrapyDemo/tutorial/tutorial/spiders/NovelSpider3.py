@@ -1,7 +1,12 @@
 import scrapy
 import os
 
+
 #网站有反爬虫机制
+from scrapy.item import DictItem
+
+from tutorial.items import NovelItem
+
 
 class NovelSpider(scrapy.Spider):
     name = 'novel3'
@@ -46,12 +51,26 @@ class NovelSpider(scrapy.Spider):
 
 
     def parse(self, response):
+        item = NovelItem()
         book_id = response.xpath('//body/@bookname').get()
         title = response.xpath('//div[@class="reader_box"]//div[@class="title_txtbox"]/text()').get().replace('\t',' ')
         author = response.xpath('//div[@class="reader_box"]//div[@class="bookinfo"]/a[1]/text()').get()
         words = response.xpath('//div[@class="reader_box"]//div[@class="bookinfo"]/span[1]/text()').get()
         last_time = response.xpath('//div[@class="reader_box"]//div[@class="bookinfo"]/span[2]/text()').get()
         novel_content = response.xpath('//div[@class="reader_box"]//div[@class="content"]/p/text()').getall()
+
+        item['book_id'] = book_id
+        item['title'] = title
+        item['author'] = author
+        item['words'] = words
+        item['last_time'] = last_time
+        item['novel_content'] = "".join(novel_content)
+        self.isExistsDir('')
+        #
+        # print('='*20)
+        # print(isinstance(item,DictItem))
+        # print('='*20)
+        yield item
 
 
 
@@ -65,31 +84,30 @@ class NovelSpider(scrapy.Spider):
         # }
     #
     #
-        self.isExistsDir('')
-        try:
-
-            with open('./source/%s.txt' % book_id, mode='a',encoding='utf-8') as f:
-                f.write(title + '\n作者：' + author + ',字数：' + words + ',更新时间：' + last_time + '\n' + "".join(novel_content))
-                f.write('\n')
-            print('%s下载成功！' % (title))
-
-            # 判断是否有下一页
-            next_page = response.xpath('//div[@class="reader_box"]/div[@class="chap_btnbox"]/a[3]/@href').get()
-            if next_page is not None:
-                next_page = response.urljoin(next_page)
-                # 直接获取到下一页的绝对url，yield一个新Request对象
-                # yield scrapy.Request(next_page, callback=self.parse)
-                # 作用同上，不用获取到绝对的url，使用follow方法会自动帮我们实现
-                yield response.follow(next_page, callback=self.parse)
-        except Exception as e:
-            d1 = dict({
-                "小说ID": book_id,
-                "章节名称：": title,
-                "作者：": author,
-                "字数：": words,
-                "更新时间：": last_time,
-                "正文：": novel_content,
-            })
-            print('*'*100)
-            print("%s 错误章节：%s" % (book_id,title))
-            print(d1)
+        # self.isExistsDir('')
+        # try:
+        #     with open('./source/%s.txt' % book_id, mode='a',encoding='utf-8') as f:
+        #         f.write(title + '\n作者：' + author + ',字数：' + words + ',更新时间：' + last_time + '\n' + "".join(novel_content))
+        #         f.write('\n')
+        #     print('%s下载成功！' % (title))
+        #
+        #     # 判断是否有下一页
+        next_page = response.xpath('//div[@class="reader_box"]/div[@class="chap_btnbox"]/a[3]/@href').get()
+        if next_page is not None:
+            next_page = response.urljoin(next_page)
+            # 直接获取到下一页的绝对url，yield一个新Request对象
+            # yield scrapy.Request(next_page, callback=self.parse)
+            # 作用同上，不用获取到绝对的url，使用follow方法会自动帮我们实现
+            yield response.follow(next_page, callback=self.parse)
+        # except Exception as e:
+        #     d1 = dict({
+        #         "小说ID": book_id,
+        #         "章节名称：": title,
+        #         "作者：": author,
+        #         "字数：": words,
+        #         "更新时间：": last_time,
+        #         "正文：": novel_content,
+        #     })
+        #     print('*'*100)
+        #     print("%s 错误章节：%s" % (book_id,title))
+        #     print(d1)

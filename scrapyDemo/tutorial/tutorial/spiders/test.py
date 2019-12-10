@@ -2,11 +2,11 @@ import requests
 import os
 
 if __name__ == '__main__':
-    response = requests.get('http://book.zongheng.com/chapter/764228/42488060.html')
-    print(response.content)
+    # response = requests.get('http://book.zongheng.com/chapter/764228/42488060.html')
+    # print(response.content)
     # bookId = '7888888'
-    # if not os.path.exists('./source/%s'%bookId):
-    #     os.makedirs('./source/%s'%bookId)
+    if not os.path.exists('./source'):
+        os.makedirs('./source')
     # curr_dir = os.getcwd()
     # print(curr_dir)
     #

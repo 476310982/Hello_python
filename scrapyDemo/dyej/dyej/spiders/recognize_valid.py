@@ -1,30 +1,28 @@
-from scrapy import cmdline
 from urllib import request
 from base64 import b64encode
-import tesserocr
 import requests
-from PIL import Image
 
-# def recognize_valid(img):
-#     image = Image.open(img)
-#     # image.show()
-#     print(tesserocr.image_to_text(image))
-#     print(tesserocr.get_languages())
 
 def recognize_valid(img_url):
+    #图像识别Api接口属性
     api_url = 'https://imgurlocr.market.alicloudapi.com/urlimages'
     appcode = 'f6ada03339e0421881791126c4dea4fd'
-    request.urlretrieve(url=img_url, filename='dyejValid.png')
+    headers = {
+        'Authorization': 'APPCODE ' + appcode,
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+    #post请求体
     body = {}
+    #请求验证码链接，下载并保存
+    request.urlretrieve(url=img_url, filename='dyejValid.png')
+    #读取验证码字节数据,并进行base64b编码,转为str,传入请求体
     with open('dyejValid.png', mode='rb') as fp:
         img_data = fp.read()
         pic = b64encode(img_data)
         pic = 'data:image/jpeg;base64,' + str(pic, encoding='utf-8')
         body['image'] = pic
-    headers = {
-        'Authorization': 'APPCODE ' + appcode,
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
+
+    #接口返回api识别结果（json数据）
     response = requests.post(api_url, data=body, headers=headers)
     if response.status_code == 200:
         res = response.json()
@@ -35,11 +33,3 @@ def recognize_valid(img_url):
             return validcode
     else:
         return None
-
-
-if __name__ == '__main__':
-    # img_url = 'https://fj.dyejia.cn/partysso/index/validImg?tm=1576115873828'
-    # # img = 'validImg.png'
-    # recognize_valid(img_url)
-
-    cmdline.execute('scrapy crawl dyej_spider'.split(' '))

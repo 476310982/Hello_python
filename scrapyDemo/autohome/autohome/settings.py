@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for dyej project
+# Scrapy settings for autohome project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,13 +9,13 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'dyej'
+BOT_NAME = 'autohome'
 
-SPIDER_MODULES = ['dyej.spiders']
-NEWSPIDER_MODULE = 'dyej.spiders'
+SPIDER_MODULES = ['autohome.spiders']
+NEWSPIDER_MODULE = 'autohome.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'dyej (+http://www.yourdomain.com)'
+# USER_AGENT = 'autohome (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -41,20 +41,19 @@ DOWNLOAD_DELAY = 1
 DEFAULT_REQUEST_HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Language': 'en',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
-    'Cookie': 'JSESSIONID=2B7F782601FB349CCAF2450A95770402; UM_distinctid=16ef41225be3bd-0708a8f6e431ce-3b65410e-100200-16ef41225bf879; Hm_lvt_21ee95768d3c69db67bf8fa31cd40e2d=1576052878; cmsVisitCookie_www=21abb29e-b190-4131-944b-31e5afe51d86'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
 }
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'dyej.middlewares.DyejSpiderMiddleware': 543,
+#    'autohome.middlewares.AutohomeSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'dyej.middlewares.DyejDownloaderMiddleware': 543,
+#    'autohome.middlewares.AutohomeDownloaderMiddleware': 543,
 # }
 
 # Enable or disable extensions
@@ -65,9 +64,9 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'dyej.pipelines.DyejPipeline': 300,
-# }
+ITEM_PIPELINES = {
+   'autohome.pipelines.AutohomePipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d597f6c-5b40-42b2-9212-c9ccbb58ccc9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dyej/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dyej/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dyej/spiders/dyej_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/dyej/spiders/dyej_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/start.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/validImg.png" beforeDir="false" afterPath="$PROJECT_DIR$/validImg.png" afterDir="false" />
+    <list default="true" id="b78da6c4-de0d-464d-8150-b21b2de9d6d9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../dyej/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../dyej/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dyej/dyej/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dyej/dyej/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dyej/dyej/spiders/dyej_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dyej/dyej/spiders/dyej_spider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dyej/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dyej/start.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dyej/validImg.png" beforeDir="false" afterPath="$PROJECT_DIR$/../dyej/validImg.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,14 +24,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="1UpTu28QqxNkGTLSmslh5qRpf4h" />
+  <component name="ProjectId" id="1UsHuaLqpEK2CBXnoAMWcg74SFW" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -47,7 +46,7 @@
   </component>
   <component name="RunManager">
     <configuration name="start" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="dyej" />
+      <module name="autohome" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -78,11 +77,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0d597f6c-5b40-42b2-9212-c9ccbb58ccc9" name="Default Changelist" comment="" />
-      <created>1576052755775</created>
+      <changelist id="b78da6c4-de0d-464d-8150-b21b2de9d6d9" name="Default Changelist" comment="" />
+      <created>1576138605586</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1576052755775</updated>
+      <updated>1576138605586</updated>
     </task>
     <servers />
   </component>
@@ -91,9 +90,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>

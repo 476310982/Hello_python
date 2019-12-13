@@ -9,6 +9,8 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+
 BOT_NAME = 'autohome'
 
 SPIDER_MODULES = ['autohome.spiders']
@@ -65,8 +67,14 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'autohome.pipelines.AutohomePipeline': 300,
+    # 'autohome.pipelines.AutohomePipeline': 300,
+    # 数字是代表优先级
+    # 'scrapy.pipelines.images.ImagesPipeline': 1
+    'autohome.pipelines.AutoHomeImagesPipeline': 1
 }
+
+# 定义下载目录
+IMAGES_STORE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "images")
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

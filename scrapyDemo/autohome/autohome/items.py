@@ -7,9 +7,12 @@
 
 import scrapy
 
-
+#定义数据格式
 class AutohomeItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    img_name = scrapy.Field()
-    img_url = scrapy.Field()
+    category = scrapy.Field()
+
+    #imagepipeline 必须有的2个属性
+    image_urls = scrapy.Field()
+    images = scrapy.Field()

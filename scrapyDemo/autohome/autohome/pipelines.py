@@ -31,25 +31,23 @@ class AutohomePipeline(object):
         return item
 
 
+# 重写ImagesPipeline的方法
 class AutoHomeImagesPipeline(ImagesPipeline):
 
+    # 获取请求列表的方法，使其携带item
     def get_media_requests(self, item, info):
         request_objs = super(AutoHomeImagesPipeline, self).get_media_requests(item, info)
         for request_obj in request_objs:
             request_obj.item = item
         return request_objs
 
+    # 获得下载路径以及图片名称
     def file_path(self, request, response=None, info=None):
-        # filename = super().file_path(response, info).replace('full/', '')
-        filename = super(AutoHomeImagesPipeline, self).file_path(request, response, info)
-        print(filename)
-        filename = filename.replace('full/', '')
+        filename = super(AutoHomeImagesPipeline, self).file_path(request, response, info).replace('full/', '')
         category = request.item.get('category')
-        print('=' * 20)
-        print(category)
+        # category = request.item['category']
         category_path = os.path.join(IMAGES_STORE, category)
         if not os.path.exists(category_path):
             os.makedirs(category_path)
         img_path = os.path.join(category_path, filename)
-        print(img_path)
         return img_path

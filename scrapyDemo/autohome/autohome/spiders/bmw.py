@@ -17,8 +17,8 @@ class BmdSpider(CrawlSpider):
     rules = {
         Rule(LinkExtractor(allow=r"https://car.autohome.com.cn/pic/series/65.html"), callback="parse_page",
              follow=True),
-        Rule(LinkExtractor(allow=r"https://car.autohome.com.cn/pic/series/65-.+.html"), callback="parse_img",
-             follow=True),
+        # Rule(LinkExtractor(allow=r"https://car.autohome.com.cn/pic/series/65-.+.html"), callback="parse_img",
+        #      follow=True),
         # Rule(LinkExtractor(allow=r"https://car.autohome.com.cn/pic/series/65\.html"), callback="parse_page", follow=True),
 
     }
@@ -36,8 +36,6 @@ class BmdSpider(CrawlSpider):
         # print(response.meta)
         if 'category' in response.meta:
             self.cate = response.meta.get('category')
-            # print('='*30)
-            # print(self.cate)
             img_urls = response.xpath('//div[@class="uibox"]//div[contains(@class,"uibox-con")]//img/@src').extract()
             img_urls = list(map(lambda url: response.urljoin(url) if not url.startswith('https') else url, img_urls))
             img_urls = list(map(

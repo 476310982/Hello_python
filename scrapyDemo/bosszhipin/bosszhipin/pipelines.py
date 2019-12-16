@@ -16,5 +16,6 @@ class BosszhipinPipeline(object):
     def process_item(self, item, spider):
         self.exporter.export_item(item)
         return item
-    def close_spider(self,spider):
+
+    def close_spider(self, spider):
         self.fp.close()

@@ -7,13 +7,11 @@
 # 定义数据结构
 import scrapy
 
-
+#定义数据结构
 class ActicleSpiderItem(scrapy.Item):
     # define the fields for your item here like:
     title = scrapy.Field()
     content = scrapy.Field()
-    article = scrapy.Field()
+    article_id = scrapy.Field()
     origin_url = scrapy.Field()
     author = scrapy.Field()
-    avatar = scrapy.Field()
-    pub_time = scrapy.Field()

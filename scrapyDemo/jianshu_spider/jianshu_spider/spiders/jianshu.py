@@ -8,7 +8,7 @@ from jianshu_spider.items import ActicleSpiderItem
 class JianshuSpider(CrawlSpider):
     name = 'jianshu'
     allowed_domains = ['jianshu.com']
-    start_urls = ['https://www.jianshu.com/p/0a1397ce61ad']
+    start_urls = ['https://www.jianshu.com']
     rules = (
         Rule(LinkExtractor(allow=r'.*/p/[0-9a-z]{12}.*'), callback='parse_detail', follow=True),
     )
@@ -16,7 +16,7 @@ class JianshuSpider(CrawlSpider):
     def parse_detail(self, response):
         title = response.xpath('//h1[@class="_1RuRku"]/text()').extract_first()
         author = response.xpath('//span[@class="_22gUMi"]/text()').extract_first()
-        content = response.xpath('//article/p').extract()
+        content = response.xpath('//article/p').extract()[0]
         url = response.url
         url1 = url.split('?')[0]
         article_id = url1.split('/')[-1]

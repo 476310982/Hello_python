@@ -4,11 +4,16 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
-#定义数据结构
+# 定义数据结构
 import scrapy
 
 
-class JianshuSpiderItem(scrapy.Item):
+class ActicleSpiderItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+    content = scrapy.Field()
+    article = scrapy.Field()
+    origin_url = scrapy.Field()
+    author = scrapy.Field()
+    avatar = scrapy.Field()
+    pub_time = scrapy.Field()

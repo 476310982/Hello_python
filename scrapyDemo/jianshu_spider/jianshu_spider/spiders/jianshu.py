@@ -20,5 +20,17 @@ class JianshuSpider(CrawlSpider):
         url = response.url
         url1 = url.split('?')[0]
         article_id = url1.split('/')[-1]
-        item = ActicleSpiderItem(title=title, author=author, content=content, origin_url=url, article_id=article_id)
+        spans = response.xpath('//div[@class="s-dsoj"]/span/text()').getall()
+        if len(spans) == 3:
+            word_count = spans[1]
+            read_count = spans[2]
+        else:
+            word_count = spans[0]
+            read_count = spans[1]
+        subjects = ",".join(response.xpath('//div[@class="_2Nttfz"]/a/span/text()').getall())
+        print('=' * 60)
+        print(spans)
+        print('=' * 60)
+        item = ActicleSpiderItem(title=title, author=author, content=content, origin_url=url, article_id=article_id,
+                                 read_count=read_count, word_count=word_count, subjects=subjects)
         yield item

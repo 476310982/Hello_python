@@ -15,3 +15,8 @@ class ActicleSpiderItem(scrapy.Item):
     article_id = scrapy.Field()
     origin_url = scrapy.Field()
     author = scrapy.Field()
+    read_count = scrapy.Field()
+    word_count = scrapy.Field()
+    subjects = scrapy.Field()
+
+

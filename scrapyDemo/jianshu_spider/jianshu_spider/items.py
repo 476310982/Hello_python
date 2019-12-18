@@ -4,10 +4,10 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
-# 定义数据结构
 import scrapy
 
-#定义数据结构
+
+# 定义数据结构
 class ActicleSpiderItem(scrapy.Item):
     # define the fields for your item here like:
     title = scrapy.Field()
@@ -18,5 +18,3 @@ class ActicleSpiderItem(scrapy.Item):
     read_count = scrapy.Field()
     word_count = scrapy.Field()
     subjects = scrapy.Field()
-
-

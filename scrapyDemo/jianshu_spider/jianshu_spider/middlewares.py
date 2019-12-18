@@ -108,28 +108,35 @@ from scrapy.http.response.html import HtmlResponse
 #     def spider_opened(self, spider):
 #         spider.logger.info('Spider opened: %s' % spider.name)
 
-
+# 自定义下载中间件
 class JianshuSeleniumDownloadMiddleware(object):
+    # 创建web驱动，声明执行的控件绝对路径
     def __init__(self):
         option = webdriver.ChromeOptions()
         option.binary_location = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
         self.driver = webdriver.Chrome(executable_path=r'D:\chromedriver_win32\chromedriver.exe', chrome_options=option)
 
+    # 定义爬虫下载前操作
     def process_request(self, request, spider):
+        # 接收engine（引擎）发送过来的请求url，驱动发送GET请求
         self.driver.get(request.url)
+        # 为了等待驱动获取页面完整，等待一秒
         time.sleep(1)
         try:
+            # 渲染的页面中存在需要多次点击【展开更多】的可能，故设置循环
             while True:
+                # 获取节点对象
                 showMore = self.driver.find_element_by_class_name('H7E3vT')
+                # 点击节点对象
                 showMore.click()
                 time.sleep(0.3)
                 if not showMore:
                     break
         except:
             pass
+        # 获取网页源代码
         source = self.driver.page_source
-        # print('=' * 60)
-        # print(source)
-        # print('=' * 60)
+        # 返回信息，将当前url、页面源代码、请求对象以及字符编码返回
         response = HtmlResponse(url=self.driver.current_url, body=source, request=request, encoding='utf-8')
+        # 不会经过scrapy的download组件
         return response

@@ -3,7 +3,7 @@ from selenium import webdriver
 import re
 #为了方便启动爬虫
 if __name__ == "__main__":
-    cmdline.execute("scrapy crawl jianshu".split(" "))
+    # cmdline.execute("scrapy crawl jianshu".split(" "))
     # option = webdriver.ChromeOptions()
     # option.binary_location = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
     # browser = webdriver.Chrome(executable_path=r'D:\chromedriver_win32\chromedriver.exe',chrome_options=option)
@@ -14,3 +14,9 @@ if __name__ == "__main__":
     # print(int("".join(res)))
     # count = int("".join(res))
     # print(type(count))
+
+
+    url = 'https://qz.fang.com/'
+    parts = url.split('.')
+    parts.insert(1,'newhouse')
+    print(".".join(parts)+'house/s')

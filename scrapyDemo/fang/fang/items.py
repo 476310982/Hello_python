@@ -10,5 +10,12 @@ import scrapy
 
 class FangItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    province = scrapy.Field()
+    city = scrapy.Field()
+    name = scrapy.Field()
+    rooms = scrapy.Field()
+    area = scrapy.Field()
+    address = scrapy.Field()
+    district = scrapy.Field()
+    sale = scrapy.Field()
+    origin_url = scrapy.Field()

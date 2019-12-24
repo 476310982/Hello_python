@@ -47,17 +47,34 @@ class SfwSpider(scrapy.Spider):
                     # 构建城市二手房链接
                     esf_url = esfhouse(city_url)
                 yield scrapy.Request(url=newhouse_url, callback=self.parse_newhouse, meta={'info': (province, city)})
-                yield scrapy.Request(url=esf_url, callback=self.parse_esf, meta={'info': (province, city)})
+                # yield scrapy.Request(url=esf_url, callback=self.parse_esf, meta={'info': (province, city)})
                 # print('省份:%s' % province)
                 # print('城市:%s' % city)
                 # print('网址:%s' % city_url)
                 # print('新房:%s' % newhouse_url)
                 # print('二手房:%s' % esf_url)
+                break
 
     def parse_newhouse(self, response):
         province, city = response.meta.get('info')
-        print(province, city)
+        # print(province, city)
+        divs = response.xpath('//div[@class="nhouse_list"]//ul/li//div[@class="nlc_details"]')
+        pattern = r'\d+(?:~\d+)?平米'
+        for div in divs:
+            name = div.xpath('.//div[@class="nlcd_name"]/a/text()').get().strip()
+            rooms = div.xpath('.//div[contains(@class,"house_type")]/a/text()').getall()
+            rooms = list(filter(lambda x: x.endswith('居'), rooms))
+            area = div.xpath('.//div[contains(@class,"house_type")]/text()').getall()
+            area = re.findall(pattern,"".join(area))
+            # print (rooms,area)
+            # #面积需要处理
+            relative_message = div.xpath('.//div[@class="address"]/a/@title').getall()
+            print ("".join(relative_message))
+            # address = scrapy.Field()
+            # district = scrapy.Field()
+            #
+            # sale = div.xpath('//div[contains(@class,"fangyuan")]/span/text()').get()
 
     def parse_esf(self, response):
         province, city = response.meta.get('info')
-        print(province, city)
+        # print(province, city)

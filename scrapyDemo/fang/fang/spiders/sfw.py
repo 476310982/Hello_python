@@ -49,14 +49,8 @@ class SfwSpider(scrapy.Spider):
                     newhouse_url = newhouse(city_url)
                     # 构建城市二手房链接
                     esf_url = esfhouse(city_url)
-                # yield scrapy.Request(url=newhouse_url, callback=self.parse_newhouse, meta={'info': (province, city)})
+                yield scrapy.Request(url=newhouse_url, callback=self.parse_newhouse, meta={'info': (province, city)})
                 yield scrapy.Request(url=esf_url, callback=self.parse_esf, meta={'info': (province, city)})
-                # print('省份:%s' % province)
-                # print('城市:%s' % city)
-                # print('网址:%s' % city_url)
-                # print('新房:%s' % newhouse_url)
-                # print('二手房:%s' % esf_url)
-                break
 
     def parse_newhouse(self, response):
         province, city = response.meta.get('info')

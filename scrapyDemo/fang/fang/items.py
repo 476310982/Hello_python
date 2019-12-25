@@ -9,7 +9,6 @@ import scrapy
 
 
 class NewHouseItem(scrapy.Item):
-    # define the fields for your item here like:
     province = scrapy.Field()
     city = scrapy.Field()
     name = scrapy.Field()

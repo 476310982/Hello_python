@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4220ec19-d0bf-4dda-a299-565c5b453ba2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/fang.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fang.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fang/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/fang/items.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fang/spiders/sfw.py" beforeDir="false" afterPath="$PROJECT_DIR$/fang/spiders/sfw.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/start.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +52,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\Anaconda\python.exe" />
+      <option name="SDK_HOME" value="F:\Anaconda\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />

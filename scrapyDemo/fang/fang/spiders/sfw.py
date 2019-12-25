@@ -85,7 +85,7 @@ class SfwSpider(scrapy.Spider):
                 origin_url = 'https:' + origin_url
             nitem = NewHouseItem(province=province, city=city, name=name, rooms=rooms, area=area, address=address,
                                  district=district, sale=sale, price=price, origin_url=origin_url)
-            yield (nitem)
+            yield nitem
         next_url = response.xpath('//div[@class="page"]//a[@class="next"]/@href').get()
         if next_url:
             yield scrapy.Request(url=response.urljoin(next_url), callback=self.parse_newhouse,
@@ -124,3 +124,10 @@ class SfwSpider(scrapy.Spider):
                                    toward=toward,
                                    year=year, address=address, price=price, unit=unit, origin_url=url)
             yield esfItem
+        next_url = response.xpath('//div[@class="page_al"]/p[1]/a/@href').get()
+
+        if next_url:
+            if not next_url.startswith('https:'):
+                next_url = response.url + next_url
+            yield scrapy.Request(url=response.urljoin(next_url), callback=self.parse_esf,
+                                 meta={'info': (province, city)})

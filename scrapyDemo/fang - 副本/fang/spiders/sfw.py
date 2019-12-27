@@ -2,7 +2,6 @@
 import scrapy
 import re
 from fang.items import NewHouseItem, EsfHouseItem
-from scrapy_redis.spiders import RedisSpider
 
 
 def newhouse(url):
@@ -19,11 +18,10 @@ def esfhouse(url):
     return ".".join(parts)
 
 
-class SfwSpider(RedisSpider):
+class SfwSpider(scrapy.Spider):
     name = 'sfw'
     allowed_domains = ['fang.com']
-    # start_urls = ['https://www.fang.com/SoufunFamily.htm']
-    redis_key = 'fang:start_urls'
+    start_urls = ['https://www.fang.com/SoufunFamily.htm']
 
     def parse(self, response):
         print('开始运行....')
@@ -97,11 +95,11 @@ class SfwSpider(RedisSpider):
             infos = list(map(lambda x: re.sub(r'\s', "", x), infos))
             rooms, area, floor, toward, year = '未知', '未知', '未知', '未知', '未知'
             for info in infos:
-                if ('厅' or '室') in info:
+                if ('厅' or '栋' or '室') in info:
                     rooms = info
                 elif ('㎡' or '呎') in info:
                     area = info
-                elif ('层' or '独栋' or '联排') in info:
+                elif '层' in info:
                     floor = info
                 elif '向' in info:
                     toward = info

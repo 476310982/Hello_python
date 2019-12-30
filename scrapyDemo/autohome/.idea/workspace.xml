@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b78da6c4-de0d-464d-8150-b21b2de9d6d9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autohome/spiders/bmw.py" beforeDir="false" afterPath="$PROJECT_DIR$/autohome/spiders/bmw.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fang/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fang/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +29,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -41,7 +43,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.start">
+  <component name="RunManager" selected="Python.test">
     <configuration name="start" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="autohome" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -86,8 +88,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.start" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.start" />
       </list>
     </recent_temporary>
   </component>

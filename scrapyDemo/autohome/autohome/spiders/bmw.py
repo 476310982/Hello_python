@@ -11,16 +11,13 @@ class BmdSpider(CrawlSpider):
     allowed_domains = ['car.autohome.com.cn']
     start_urls = ['https://car.autohome.com.cn/pic/series/65.html']
     pattern = r'https:.+/(.*?)auto.+'
+    # 种类
     cate = ""
 
     # 定义元组要最后面要加个“，”
     rules = {
         Rule(LinkExtractor(allow=r"https://car.autohome.com.cn/pic/series/65.html"), callback="parse_page",
              follow=True),
-        # Rule(LinkExtractor(allow=r"https://car.autohome.com.cn/pic/series/65-.+.html"), callback="parse_img",
-        #      follow=True),
-        # Rule(LinkExtractor(allow=r"https://car.autohome.com.cn/pic/series/65\.html"), callback="parse_page", follow=True),
-
     }
 
     def parse_page(self, response):
@@ -28,14 +25,19 @@ class BmdSpider(CrawlSpider):
         category = categories.xpath('./a[1]/text()').extract()
         page_urls = categories.xpath('./a[1]/@href').extract()
         page_urls = list(map(lambda x: response.urljoin(x), page_urls))
+        # zip：“拉链”，将对应index的值形成键值对（Key：Value）
         for cate, url in zip(category, page_urls):
-            # print(cate,url)
+            # 返回Request请求，携带meta元数据
             yield scrapy.Request(url=url, callback=self.parse_img, meta={'category': cate, 'url': url})
 
     def parse_img(self, response):
-        # print(response.meta)
         if 'category' in response.meta:
             self.cate = response.meta.get('category')
+            # 对提取到的img_url进行处理，并存入item对象，发送给pipeline处理
+            # 缩略图url：'https://img3.autoimg.cn/pano/g16/M0D/CD/67/240x180_autohomecar__wKjBx1n8FyaAU0yCAAK0rtZi_to725.jpg'
+            # 原图url：'https://img3.autoimg.cn/pano/g16/M0D/CD/67/autohomecar__wKjBx1n8FyaAU0yCAAK0rtZi_to725.jpg'
+            # 规律：根据正则表达式'https:.+/(.*?)auto.+' 剔除部分数据 生成原图url
+
             img_urls = response.xpath('//div[@class="uibox"]//div[contains(@class,"uibox-con")]//img/@src').extract()
             img_urls = list(map(lambda url: response.urljoin(url) if not url.startswith('https') else url, img_urls))
             img_urls = list(map(
@@ -46,8 +48,9 @@ class BmdSpider(CrawlSpider):
         next_page = response.xpath('//div[@class="page"]/a[@class="page-item-next"]/@href').extract()
         if next_page is not None:
             next_page_url = response.urljoin(next_page[0])
-            yield scrapy.Request(url=next_page_url, callback=self.parse_img, meta={'category': self.cate, 'url': next_page_url})
-
+            # 返回Request放到scheduler调度中，并携带元数据
+            yield scrapy.Request(url=next_page_url, callback=self.parse_img,
+                                 meta={'category': self.cate, 'url': next_page_url})
 
     def test_parse(self, response):
         uiboxs = response.xpath('//div[@class="uibox"]')[1:]

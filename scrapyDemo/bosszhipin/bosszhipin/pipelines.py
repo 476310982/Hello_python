@@ -10,6 +10,7 @@ from scrapy.exporters import JsonLinesItemExporter
 
 class BosszhipinPipeline(object):
     def __init__(self):
+        #打开目标json文件，字节写入
         self.fp = open('jobs.json', 'wb')
         self.exporter = JsonLinesItemExporter(self.fp, ensure_ascii=False)
 

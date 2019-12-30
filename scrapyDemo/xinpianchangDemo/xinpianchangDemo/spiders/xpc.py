@@ -27,7 +27,12 @@ class XpcSpider(scrapy.Spider):
         # print(response.url)
         post = {}
         # post['video_name'] = response.xpath('//div[@class="title-wrap"]/h3/text()').get()
-        cates = response.xpath('//span[contains(@class,"cate")]//text()').getall()
+        cates = response.xpath('//span[contains(@class,"cate")][1]//text()').getall()
         print('=' * 60)
+        # cate = list(map(lambda x:re.sub(r'\s|\t',"",x),cates))
+        # for index,value in enumerate(cate):
+        #     if not value:
+        #         cate.pop(index)
+        # print(cate)
         print(re.sub(r'\s|\t', '', "".join(cates)))
         print('=' * 60)

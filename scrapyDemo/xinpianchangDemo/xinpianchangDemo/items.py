@@ -8,13 +8,24 @@
 import scrapy
 
 
-class XinpianchangdemoItem(scrapy.Item):
+class VideoInfoItem(scrapy.Item):
     # define the fields for your item here like:
-    video_name = scrapy.Field()
+    pid = scrapy.Field()
+    title = scrapy.Field()
     video_url = scrapy.Field()
-    cates = scrapy.Field()
+    category = scrapy.Field()
     update_time = scrapy.Field()
     curplaycounts = scrapy.Field()
     like_counts = scrapy.Field()
     desc = scrapy.Field()
-    info_tags = scrapy.Field()
+    tags = scrapy.Field()
+    duration = scrapy.Field()
+    video_cover = scrapy.Field()
+    creator_info = scrapy.Field()
+
+
+class CommentsItem(scrapy.Item):
+    pid = scrapy.Field()
+    userid = scrapy.Field()
+    content = scrapy.Field()
+    username = scrapy.Field()

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
+import json
+from xinpianchangDemo.items import CommentsItem, VideoInfoItem
 from scrapy import Request
 import scrapy
-import json
 
 
 # 清洗抓取的cate数据
@@ -23,6 +24,10 @@ def cate_fun(cates):
     return res
 
 
+cookie = dict(
+    Authorization='F5ED63BD7E6A7C1697E6A742FE7E6A78D847E6A7355AD4DFCB22')
+
+
 class XpcSpider(scrapy.Spider):
     name = 'xpc'
     allowed_domains = ['xinpianchang.com', 'openapi-vtom.vmovier.com']
@@ -37,19 +42,18 @@ class XpcSpider(scrapy.Spider):
         for video_url in video_urls:
             request = response.follow(url % video_url, callback=self.parse_post)
             request.meta['pid'] = video_url
-            yield request
+            # yield request
 
         # 自动爬取下一页
-        # next_page = response.xpath('//div[@class="page-wrap"]/div[@class="page"]/a[@title="下一页"]/@href').get()
-        # if next_page:
-        #     next_page = 'https://www.xinpianchang.com/' + next_page
-        #     yield response.follow(url=next_page, callback=self.parse)
+        next_page = response.xpath('//div[@class="page-wrap"]/div[@class="page"]/a[@title="下一页"]/@href').get()
+        if next_page:
+            next_page = 'https://www.xinpianchang.com/' + next_page
+            yield response.follow(url=next_page, callback=self.parse,cookies=cookie)
 
     def parse_post(self, response):
         pid = response.meta['pid']
-        post = {
-            'pid': pid,
-        }
+        post = VideoInfoItem()
+        post['pid'] = pid
         # 获取标题
         post['title'] = response.xpath('//div[@class="title-wrap"]/h3/text()').get()
         cates = response.xpath('//span[contains(@class,"cate")]//text()').getall()
@@ -73,6 +77,10 @@ class XpcSpider(scrapy.Spider):
             post['desc'] = '暂无简介'
         # 获取视频标签
         post['tags'] = response.xpath('//div[contains(@class,"filmplay-info-tags")]/div/a/text()').getall()
+        creator_info = response.xpath('//div[@class="user-team"]//li/div[@class="creator-info"]')
+        creators = creator_info.xpath('.//span[contains(@class,"name")]/text()').getall()
+        roles = creator_info.xpath('.//span[contains(@class,"role")]/text()').getall()
+        post['creator_info'] = dict(zip(creators, roles))
 
         # 经过排查，视频的相关信息是通过ajax动态加载出来的，万幸的是保存在了页面源代码内，可以通过正则表达式找出唯一值
         vid = re.findall('vid: \"(\w+)\",', response.text)[0]
@@ -82,26 +90,43 @@ class XpcSpider(scrapy.Spider):
         # 将已经获得的数据一起携带发送
         request.meta['post'] = post
         yield request
-        i = 1
-        while True:
-            # 获取视频评论（动态加载）
-            comment_url = 'https://app.xinpianchang.com/comments?resource_id=%s&type=article&page=%d&per_page=24'
-            request = Request(comment_url % (pid, i), callback=self.parse_comment)
-            if request:
-                request.meta['pid'] = pid
-                i += 1
-                yield request
-            else:
-                break
 
+        # 获取视频评论（动态加载）
+        # comment_url = 'https://app.xinpianchang.com/comments?resource_id=%s&type=article&page=%d&per_page=24'
+        # request = Request(comment_url % (pid, 1), callback=self.parse_comment)
+        # request.meta['pid'] = pid
+        # request.meta['page'] = 1
+        # yield request
+
+    # 获取视频相关信息
     def parse_video(self, response):
         post = response.meta['post']
         # 获得了一个json页面，解析内容
         result = json.loads(response.text)
         post['video_url'] = result['data']['resource']['default']['url']
         post['video_cover'] = result['data']['video']['cover']
-        print(post)
+        post['duration'] = result['data']['video']['duration']
+        yield post
 
+    # 获取评论数据
     def parse_comment(self, response):
         pid = response.meta['pid']
-        content = json.loads(response.text())
+        page = response.meta['page']
+        content = json.loads(response.text)
+        content_list = content['data']['list']
+        if content_list:
+            for item in content_list:
+                comment = CommentsItem()
+                comment['pid'] = pid
+                comment['userid'] = item['userid']
+                comment['content'] = item['content']
+                comment['username'] = item['userInfo']['username']
+                # comments.append(comment)
+                yield comment
+            # 翻页获取下一页评论
+            page += 1
+            comment_url = 'https://app.xinpianchang.com/comments?resource_id=%s&type=article&page=%d&per_page=24'
+            request = Request(comment_url % (pid, page), callback=self.parse_comment)
+            request.meta['pid'] = pid
+            request.meta['page'] = page
+            yield request

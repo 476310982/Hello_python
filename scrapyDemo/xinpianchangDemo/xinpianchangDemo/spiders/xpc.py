@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
 import json
+import string
+import random
 from xinpianchangDemo.items import CommentsItem, VideoInfoItem
 from scrapy import Request
 import scrapy
@@ -24,6 +26,10 @@ def cate_fun(cates):
     return res
 
 
+def gen_session():
+    return "".join(random.choices(string.ascii_lowercase + string.digits, k=26))
+
+
 cookie = dict(
     Authorization='F5ED63BD7E6A7C1697E6A742FE7E6A78D847E6A7355AD4DFCB22')
 
@@ -33,8 +39,13 @@ class XpcSpider(scrapy.Spider):
     allowed_domains = ['xinpianchang.com', 'openapi-vtom.vmovier.com']
     # start_urls = ['http://xinpianchang.com/']
     start_urls = ['https://www.xinpianchang.com/channel/index/sort-like?from=tabArticle']
+    page_count = 0
 
     def parse(self, response):
+        self.page_count += 1
+        if self.page_count >= 70:
+            cookie.update(PHPSESSID=gen_session())
+            self.page_count = 0
         # 获得文章id
         video_urls = response.xpath(
             '//div[contains(@class,"channel-con")]/ul[@class="video-list"]/li/@data-articleid').getall()
@@ -48,7 +59,7 @@ class XpcSpider(scrapy.Spider):
         next_page = response.xpath('//div[@class="page-wrap"]/div[@class="page"]/a[@title="下一页"]/@href').get()
         if next_page:
             next_page = 'https://www.xinpianchang.com/' + next_page
-            yield response.follow(url=next_page, callback=self.parse,cookies=cookie)
+            yield response.follow(url=next_page, callback=self.parse, cookies=cookie)
 
     def parse_post(self, response):
         pid = response.meta['pid']

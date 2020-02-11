@@ -9,3 +9,8 @@
 class XinpianchangdemoPipeline(object):
     def process_item(self, item, spider):
         return item
+
+
+class XinpinchangPostPipeline(object):
+    def process_item(self,item,spider):
+        pass

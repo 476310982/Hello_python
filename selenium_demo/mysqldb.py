@@ -26,9 +26,12 @@ class mysqlPipeline(object):
         # print(keys)
         # print('=' * 60)
         # print(values)
-        self.sql = 'insert into `jd_goodlist`({}) values ({}) ON DUPLICATE KEY UPDATE '.format(','.join(keys),','.join(['%s'] * len(values)))
-        self.cursor.execute(self.sql, values)
+        self.sql = 'insert into `jd_goodlist`({}) values ({}) ON DUPLICATE KEY UPDATE {}'.format(
+            ','.join(keys),
+            ','.join(['%s'] * len(values)),
+            ','.join(['{}=%s'.format(k) for k in keys])
+        )
         # print(self.sql)
-
+        self.cursor.execute(self.sql, values * 2)
         self.conn.commit()
         print('=' * 20 + '插入成功' + '=' * 20)

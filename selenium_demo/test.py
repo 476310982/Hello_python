@@ -1,6 +1,10 @@
 
 import pyexcel
+import selenium
+from selenium import webdriver
 
 if __name__ == '__main__':
-    item = {'a':1,'b':2}
-    print(dir(pyexcel))
+    driver = webdriver.Chrome()
+    driver.get('https://www.baidu.com')
+    # print(driver.page_source)
+    driver.execute_async_script()

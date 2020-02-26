@@ -15,7 +15,8 @@ if __name__ == '__main__':
         keyword = sys.argv[1]
     option = Options()
     option.add_argument('--headless')
-    driver = webdriver.Chrome(options=option)
+    # driver = webdriver.Chrome(options=option)
+    driver = webdriver.Chrome()
     driver.get('https://www.jd.com/')
     # 获取首页输入框的控制，输入关键词并按回车操作
     kw = driver.find_element_by_id('key')
@@ -36,7 +37,7 @@ if __name__ == '__main__':
         height = good_list['y'] + good_list['height']
         for i in range(10):
             driver.execute_script('window.scrollTo(0,%s)' % (i * 1000))
-            time.sleep(3)
+            time.sleep(1)
             if i > height:
                 break
         driver.execute_script('window.scrollTo(0,document.body.scrollHeight)')
@@ -60,7 +61,8 @@ if __name__ == '__main__':
         try:
             curPage = driver.find_element_by_css_selector('span.p-num>a.curr').text
             print('=' * 20 + '已获取第%s页内容,共有%s件商品' % (curPage, len(lis)) + '=' * 20)
-            driver.save_screenshot('第%s页面截图.png' % curPage)
+            # 获取截图
+            # driver.save_screenshot('第%s页面截图.png' % curPage)
             next_page = driver.find_element_by_class_name('pn-next')
             if 'disabled' in next_page.get_attribute('class'):
                 has_next = False

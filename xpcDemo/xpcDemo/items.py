@@ -53,7 +53,7 @@ class creatorItem(scrapy.Item):
 
 
 class crItem(scrapy.Item):
-    table_name = 'copyRight'
+    table_name = 'copyright'
     pcid = scrapy.Field()
     cid = scrapy.Field()
     pid = scrapy.Field()

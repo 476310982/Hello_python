@@ -54,7 +54,7 @@ pyzmq==18.1.1
 qtconsole==4.6.0
 queuelib==1.5.0
 redis==3.3.11
-Scrapy==1.8.0
+Scrapy==2.6.2
 scrapy-redis==0.6.8
 Send2Trash==1.5.0
 service-identity==18.1.0
